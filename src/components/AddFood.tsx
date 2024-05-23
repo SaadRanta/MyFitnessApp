@@ -1,8 +1,7 @@
+import React from 'react'
 
-function AddFood() {
+export default function AddFood() {
   return (
-    <div className=" bg-red-500">addFood</div>
+    <div>AddFood</div>
   )
 }
-
-export default AddFood
