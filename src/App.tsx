@@ -1,13 +1,11 @@
-import AddFood from "./components/AddFood"
+import AppRoutes from './Routes';
 
 function App() {
   return (
-    <>
-
-<AddFood />
-
-</>
-  )
+    <div>
+      <AppRoutes />
+    </div>
+  );
 }
 
-export default App
+export default App;
