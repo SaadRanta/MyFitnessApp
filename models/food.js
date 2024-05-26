@@ -27,4 +27,3 @@ const foodItemSchema = new Schema({
 
 // Create the model
 export const FoodItem = model('FoodItem', foodItemSchema);
-

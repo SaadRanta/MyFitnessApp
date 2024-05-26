@@ -15,5 +15,4 @@ const AddFood = () => {
     </div>
   )
 }
-
 export default AddFood
