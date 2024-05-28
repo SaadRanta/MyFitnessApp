@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect } from "react";
 import AutoCompleteText from "./AutoCompleteText";
 import { getFoodItems } from "../redux/slices/FoodSlice";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { getFoodItems } from "../redux/slices/FoodSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +5,6 @@ import { AppDispatch, RootState } from "../redux/store";
 import AutoCompleteText from "../components/AutoCompleteText";
 
 const FoodItem = () => {
-  const [foodName, setFoodName] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFood, setSelectedFood] = useState();
   const [quantity, setQuantity] = useState("");
@@ -62,6 +60,8 @@ const FoodItem = () => {
         >
           <option value="Breakfast">Breakfast</option>
           <option value="Lunch">Lunch</option>
+          <option value="Snacks">Snacks</option>
+
           <option value="Dinner">Dinner</option>
         </select>
       </div>

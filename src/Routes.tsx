@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AddFood from './components/AddFood';
-import FoodItem from './pages/FoodItem';
 import Sample from './components/Sample';
+import FoodItem from './components/FoodItem';
 
 const AppRoutes: React.FC = () => {
   return (
