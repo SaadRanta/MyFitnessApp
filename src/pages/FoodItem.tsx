@@ -1,77 +1,49 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { getFoodItems } from "../redux/slices/FoodSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import AutoCompleteText from "../components/AutoCompleteText";
 
 const FoodItem = () => {
   const [foodName, setFoodName] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const [selectedFood, setSelectedFood] = useState(null);
+  const [selectedFood, setSelectedFood] = useState();
   const [quantity, setQuantity] = useState("");
   const [mealType, setMealType] = useState("Breakfast");
 
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { food } = useSelector((state: RootState) => state.fooditems);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/Food")
-      .then((response) => setFoodName(response.data))
-      .catch((error) => console.log(error));
-  }, []);
+    dispatch(getFoodItems());
+  }, [dispatch]);
 
-  const handleSearch = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-
-    if (query) {
-      const result = foodName.filter(item =>
-        item.Shrt_Desc.toLowerCase().includes(query.toLowerCase())
-      );
-      setSearchResult(result);
-    } else {
-      setSearchResult([]);
-    }
-  };
-
-  const handleOptionClick = (option) => {
-    setSearchQuery(option.Shrt_Desc);
-    setSelectedFood(option);
-    setSearchResult([]);
+  const handleFoodSelect = (shortDesc) => {
+    const selected = food.find(item => item.Shrt_Desc === shortDesc);
+    setSelectedFood(selected);
+    setSearchQuery(shortDesc);
   };
 
   const handleAddButtonClick = () => {
-    const selected = foodName.find(item => item.Shrt_Desc.toLowerCase() === searchQuery.toLowerCase());
-  
-    if(searchQuery===""){
-alert("Please Add Food")
-   }
-   
-    else if (selected) {
-      setSelectedFood(selected);
-    } else {
-      setSelectedFood(null);
+    if (searchQuery === "") {
+      alert("Please add food");
+      return;
     }
+
+    if (!selectedFood) {
+      alert("Please select a valid food item");
+      return;
+    }
+
+    console.log(selectedFood, quantity, mealType);
   };
 
   return (
     <div className="flex flex-col items-center pt-5">
       <div className="relative mx-5 w-96 mb-4">
-        <input
-          type="text"
-          className="border-4 border-black rounded-xl p-1 w-full"
-          value={searchQuery}
-          onChange={handleSearch}
-        />
-        {searchResult.length > 0 && (
-          <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-b-xl max-h-48 overflow-y-auto">
-            {searchResult.map((item, index) => (
-              <div
-                key={index}
-                className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                onClick={() => handleOptionClick(item)}
-              >
-                {item.Shrt_Desc}
-              </div>
-            ))}
-          </div>
-        )}
+        <AutoCompleteText items={food} onSelect={handleFoodSelect} />
       </div>
       <div className="mb-4 w-96">
         <input
@@ -94,7 +66,7 @@ alert("Please Add Food")
         </select>
       </div>
       
-      {selectedFood && quantity &&  (
+      {selectedFood && quantity && (
         <div className="mt-4 p-4 border border-gray-300 rounded-xl w-96 bg-white shadow-lg">
           <h3 className="text-xl font-bold mb-2">{selectedFood.Shrt_Desc}</h3>
           <p className="mb-1">
