@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { getFoodItems } from "../redux/slices/FoodSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from "../redux/store";
 import AutoCompleteText from "../components/AutoCompleteText";
 
 const FoodItem = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFood, setSelectedFood] = useState();
+  const [selectedFood, setSelectedFood] = useState(null);
   const [quantity, setQuantity] = useState("");
   const [mealType, setMealType] = useState("Breakfast");
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const { food } = useSelector((state: RootState) => state.fooditems);
 
@@ -35,7 +37,13 @@ const FoodItem = () => {
       return;
     }
 
-    console.log(selectedFood, quantity, mealType);
+    const foodData = {
+      ...selectedFood,
+      quantity,
+      mealType
+    };
+console.log(foodData)
+    navigate('/', { state: { foodData } });
   };
 
   return (
@@ -61,7 +69,6 @@ const FoodItem = () => {
           <option value="Breakfast">Breakfast</option>
           <option value="Lunch">Lunch</option>
           <option value="Snacks">Snacks</option>
-
           <option value="Dinner">Dinner</option>
         </select>
       </div>
