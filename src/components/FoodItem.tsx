@@ -20,7 +20,7 @@ const FoodItem = () => {
     dispatch(getFoodItems());
   }, [dispatch]);
 
-  const handleFoodSelect = (shortDesc) => {
+  const handleFoodSelect = (shortDesc: string) => {
     const selected = food.find(item => item.Shrt_Desc === shortDesc);
     setSelectedFood(selected);
     setSearchQuery(shortDesc);
@@ -38,11 +38,20 @@ const FoodItem = () => {
     }
 
     const foodData = {
-      ...selectedFood,
+      ...(selectedFood),
       quantity,
       mealType
     };
-console.log(foodData)
+
+    // Retrieve existing food data from localStorage
+    const existingFoodData = JSON.parse(localStorage.getItem('foodData')) || [];
+
+    // Add new food data to the existing data
+    existingFoodData.push(foodData);
+
+    // Save the updated data back to localStorage
+    localStorage.setItem('foodData', JSON.stringify(existingFoodData));
+
     navigate('/', { state: { foodData } });
   };
 
