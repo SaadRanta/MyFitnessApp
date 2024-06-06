@@ -9,6 +9,12 @@ const Sample = () => {
     setFoodData(storedFoodData);
   }, []);
 
+  const handleDelete = (indexToDelete) => {
+    const updatedFoodData = foodData.filter((_, index) => index !== indexToDelete);
+    setFoodData(updatedFoodData);
+    localStorage.setItem('foodData', JSON.stringify(updatedFoodData));
+  };
+
   return (
     <div className='mt-5 px-5 flex flex-row items-start justify-center'>
       <div className='w-full'>
@@ -34,6 +40,7 @@ const Sample = () => {
               <th scope="col" className="px-6 py-3">Protein</th>
               <th scope="col" className="px-6 py-3">Sodium</th>
               <th scope="col" className="px-6 py-3">Sugar</th>
+              <th scope="col" className="px-6 py-3">Quantity</th>
               <th scope="col" className="px-6 py-3">Action</th>
             </tr>
           </thead>
@@ -43,14 +50,15 @@ const Sample = () => {
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {foodItem.Shrt_Desc}
                 </th>
-                <td className="px-6 py-4">{foodItem.Energ_Kcal}</td>
-                <td className="px-6 py-4">{foodItem['Carbohydrt_(g)']}</td>
-                <td className="px-6 py-4">{foodItem['FA_Mono_(g)']}</td>
-                <td className="px-6 py-4">{foodItem['Protein_(g)']}</td>
-                <td className="px-6 py-4">{foodItem['Sodium_(mg)']}</td>
-                <td className="px-6 py-4">{foodItem['Sugar_Tot_(g)']}</td>
+                <td className="px-6 py-4">{(foodItem.Energ_Kcal * foodItem.quantity).toFixed(2)}</td>
+                <td className="px-6 py-4">{(foodItem['Carbohydrt_(g)'] * foodItem.quantity).toFixed(2)}</td>
+                <td className="px-6 py-4">{(foodItem['FA_Mono_(g)'] * foodItem.quantity).toFixed(2)}</td>
+                <td className="px-6 py-4">{(foodItem['Protein_(g)'] * foodItem.quantity).toFixed(2)}</td>
+                <td className="px-6 py-4">{(foodItem['Sodium_(mg)'] * foodItem.quantity).toFixed(2)}</td>
+                <td className="px-6 py-4">{(foodItem['Sugar_Tot_(g)'] * foodItem.quantity).toFixed(2)}</td>
+                <td className="px-6 py-4">{foodItem.quantity}</td>
                 <td className="px-6 py-4">
-                  <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                  <a href="#" className="text-red-500 font-bold hover:underline" onClick={() => handleDelete(index)}>Delete</a>
                 </td>
               </tr>
             ))}

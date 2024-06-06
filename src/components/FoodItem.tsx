@@ -27,6 +27,9 @@ const FoodItem = () => {
   };
 
   const handleAddButtonClick = () => {
+
+
+
     if (searchQuery === "") {
       alert("Please add food");
       return;
@@ -41,15 +44,14 @@ const FoodItem = () => {
       ...(selectedFood),
       quantity,
       mealType
+
+
     };
 
-    // Retrieve existing food data from localStorage
     const existingFoodData = JSON.parse(localStorage.getItem('foodData')) || [];
 
-    // Add new food data to the existing data
     existingFoodData.push(foodData);
 
-    // Save the updated data back to localStorage
     localStorage.setItem('foodData', JSON.stringify(existingFoodData));
 
     navigate('/', { state: { foodData } });
