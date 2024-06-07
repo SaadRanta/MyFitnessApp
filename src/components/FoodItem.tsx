@@ -29,8 +29,7 @@ const FoodItem = () => {
   const handleAddButtonClick = () => {
 
 
-
-    if (searchQuery === "") {
+    if (quantity === "") {
       alert("Please add food");
       return;
     }
@@ -57,6 +56,18 @@ const FoodItem = () => {
     navigate('/', { state: { foodData } });
   };
 
+const handleQuantity =(e)=>{
+
+  let value =e.target.value
+
+if(value<0){
+  setQuantity('')
+}else {
+  setQuantity(value)
+}
+
+}
+
   return (
     <div className="flex flex-col items-center pt-5">
       <div className="relative mx-5 w-96 mb-4">
@@ -68,7 +79,7 @@ const FoodItem = () => {
           className="border-2 border-black rounded-xl p-1 w-full"
           placeholder="Quantity"
           value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
+          onChange={handleQuantity}
         />
       </div>
       <div className="mb-4 w-96">
