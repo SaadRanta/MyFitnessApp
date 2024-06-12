@@ -8,7 +8,7 @@ import AutoCompleteText from "../components/AutoCompleteText";
 const FoodItem = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFood, setSelectedFood] = useState(null);
-  const [quantity, setQuantity] = useState("");
+  const [quantity, setQuantity] = useState('');
   const [mealType, setMealType] = useState("Breakfast");
 
   const dispatch = useDispatch<AppDispatch>();
@@ -27,10 +27,8 @@ const FoodItem = () => {
   };
 
   const handleAddButtonClick = () => {
-
-
-    if (quantity === "") {
-      alert("Please add food");
+    if (quantity === 0) {
+      alert("Please add a valid quantity");
       return;
     }
 
@@ -41,10 +39,8 @@ const FoodItem = () => {
 
     const foodData = {
       ...(selectedFood),
-      quantity,
+      quantity: Number(quantity),
       mealType
-
-
     };
 
     const existingFoodData = JSON.parse(localStorage.getItem('foodData')) || [];
@@ -56,17 +52,15 @@ const FoodItem = () => {
     navigate('/', { state: { foodData } });
   };
 
-const handleQuantity =(e)=>{
+  const handleQuantity = (e) => {
+    let value = Number(e.target.value);
 
-  let value =e.target.value
-
-if(value<0){
-  setQuantity('')
-}else {
-  setQuantity(value)
-}
-
-}
+    if (value < 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(value);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center pt-5">
@@ -95,7 +89,7 @@ if(value<0){
         </select>
       </div>
       
-      {selectedFood && quantity && (
+      {selectedFood && quantity > 0 && (
         <div className="mt-4 p-4 border border-gray-300 rounded-xl w-96 bg-white shadow-lg">
           <h3 className="text-xl font-bold mb-2">{selectedFood.Shrt_Desc}</h3>
           <p className="mb-1">
