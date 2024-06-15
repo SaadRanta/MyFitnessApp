@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import FoodItem from './components/FoodItem';
-import Addfood from './components/Addfood';
+import Addfood from './components/AddFood';
 
 const AppRoutes: React.FC = () => {
   const location = useLocation();
@@ -11,7 +11,7 @@ const AppRoutes: React.FC = () => {
 
     
     <Routes>
-      <Route path="/" element={<Addfood foodData={foodData} />} />
+        <Route path="/" element={<Addfood foodData={foodData} />} />
       <Route path="/fooditem" element={<FoodItem />} />
     </Routes>
   );

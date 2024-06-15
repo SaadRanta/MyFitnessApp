@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { FoodItem } from "./food.js";
 
 (async () => {
-    await mongoose.connect(`mongodb://127.0.0.1:27017/Food`);
+    await mongoose.connect(`mongodb+srv://Saad2112326:2112326@fitness.eoc7tkm.mongodb.net/Food`);
     // await mongoose.connect(`mailto:2112326@fitness.eoc7tkm.mongodb.net/Food`);
 
 })();
