@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFoodItems } from "../redux/slices/FoodSlice";
+import { getFoodItems, addFoodItem } from "../redux/slices/FoodSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from "../redux/store";
@@ -14,7 +14,7 @@ const FoodItem = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const { food } = useSelector((state: RootState) => state.fooditems);
+  const { food } = useSelector((state: RootState) => state.food);
 
   useEffect(() => {
     dispatch(getFoodItems());
@@ -43,12 +43,7 @@ const FoodItem = () => {
       mealType
     };
 
-    const existingFoodData = JSON.parse(localStorage.getItem('foodData')) || [];
-
-    existingFoodData.push(foodData);
-
-    localStorage.setItem('foodData', JSON.stringify(existingFoodData));
-
+    dispatch(addFoodItem(foodData));
     navigate('/', { state: { foodData } });
   };
 
